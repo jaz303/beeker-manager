@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/jaz303/beeker-manager/issues"
   },
-  "homepage": "https://github.com/jaz303/beeker-manager"
+  "homepage": "https://github.com/jaz303/beeker-manager",
+  "dependencies": {
+    "beeker": "^0.1.1"
+  },
+  "devDependencies": {
+    "tape": "^2.14.0"
+  }
 }
