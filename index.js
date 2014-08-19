@@ -1,12 +1,18 @@
+module.exports = Manager;
+
 var Collection = require('beeker');
 
-function SCollection() {
+function Manager() {
 	this._collection 	= new Collection();
 	this._activeIndex	= -1;
 	this.events 		= this._collection.events;
 }
 
-SCollection.prototype.active = function() {
+Manager.prototype.at = function(ix) {
+	return this._collection.at(ix);
+}
+
+Manager.prototype.active = function() {
 	if (this._activeIndex < 0) {
 		return null;
 	} else {
@@ -14,7 +20,7 @@ SCollection.prototype.active = function() {
 	}
 }
 
-SCollection.prototype.activate = function(item) {
+Manager.prototype.activate = function(item) {
 	if (typeof item === 'number') {
 		this._setActive(this._collection.at(item), item);	
 	} else {
@@ -22,33 +28,33 @@ SCollection.prototype.activate = function(item) {
 	}
 }
 
-SCollection.prototype.previous = function() {
+Manager.prototype.previous = function() {
 	this._cycle(-1);
 }
 
-SCollection.prototype.next = function() {
+Manager.prototype.next = function() {
 	this._cycle(1);
 }
 
-SCollection.prototype.add = function(item) {
+Manager.prototype.add = function(item) {
 	this._collection.add(item);
 	if (this._collection.length === 1) {
 		this._setActive(this._collection.at(0), 0);
 	}
 }
 
-SCollection.prototype.remove = function(item) {
+Manager.prototype.remove = function(item) {
 	this._remove(this._collection.indexOf(item));
 }
 
-SCollection.prototype.removeActive = function() {
+Manager.prototype.removeActive = function() {
 	this._remove(this._activeIndex);
 }
 
 //
 // Internals
 
-SCollection.prototype._setActive = function(item, ix) {
+Manager.prototype._setActive = function(item, ix) {
 
 	if (!item || ix < 0) {
 		return;
@@ -64,7 +70,7 @@ SCollection.prototype._setActive = function(item, ix) {
 
 }
 
-SCollection.prototype._remove = function(ix) {
+Manager.prototype._remove = function(ix) {
 	if (ix < 0) return;
 
 	// if (this._collection.length === 0) {
@@ -84,7 +90,7 @@ SCollection.prototype._remove = function(ix) {
 	// }
 }
 
-SCollection.prototype._cycle = function(delta) {
+Manager.prototype._cycle = function(delta) {
 
 	if (this._collection.length === 0) {
 		return;
@@ -98,6 +104,6 @@ SCollection.prototype._cycle = function(delta) {
 		ix = 0;
 	}
 
-	this.setActiveIndex(ix);
+	this.activate(ix);
 
 }
