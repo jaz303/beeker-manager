@@ -135,3 +135,51 @@ test("next", function(assert) {
     assert.end();
 
 });
+
+test("removing to empty collection", function(assert) {
+
+    var t = createManager();
+
+    t.manager.remove(t.items[0]);
+    t.manager.remove(t.items[1]);
+    t.manager.remove(t.items[2]);
+
+    assert.equal(t.manager.active(), null);
+    assert.end();
+
+});
+
+test("removing ix above selected index", function(assert) {
+
+    var t = createManager();
+
+    t.manager.remove(t.items[2]);
+
+    assert.equal(t.manager.active(), t.items[0]);
+    assert.end();
+
+});
+
+test("removing selected index at end", function(assert) {
+
+    var t = createManager();
+
+    t.manager.activate(2);
+    t.manager.remove(t.items[2]);
+
+    assert.equal(t.manager.active(), t.items[1]);
+    assert.end();
+
+});
+
+test("removing selected index from middle", function(assert) {
+
+    var t = createManager();
+
+    t.manager.activate(1);
+    t.manager.remove(t.items[1]);
+
+    assert.equal(t.manager.active(), t.items[2]);
+    assert.end();
+
+});
